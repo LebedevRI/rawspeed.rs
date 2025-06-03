@@ -8,6 +8,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  pull-requests: write
+
 jobs:
   validation:
     runs-on: ubuntu-latest
@@ -23,15 +26,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd rawspeed
+          cd rawspeed.rs
           gh pr close --comment "Pull Requests should only be submitted to `master` branch" ${{ github.event.number }}
           exit 1
       - name: Close Pull if PR is not from a proper branch
         timeout-minutes: 1
-        if: github.event_name == 'pull_request_target' && github.head_ref == github.base_ref
+        if: github.event_name == 'pull_request_target' && github.head_ref != github.base_ref
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd rawspeed
+          cd rawspeed.rs
           gh pr close --comment "Pull Requests source branch should be branched off of the Pull Request's target branch" ${{ github.event.number }}
           exit 1
