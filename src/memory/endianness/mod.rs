@@ -1,5 +1,4 @@
 pub mod endianness {
-
     #[derive(Debug, Copy, Clone, PartialEq)]
     pub enum Endianness {
         Little,
@@ -28,7 +27,8 @@ pub mod endianness {
             Unknown,
         }
 
-        pub fn get_host_endianness_runtime() -> Result<Endianness, EndiannessDetectionError> {
+        pub fn get_host_endianness_runtime()
+        -> Result<Endianness, EndiannessDetectionError> {
             match u16::from_ne_bytes([1, 0]).to_le_bytes() {
                 [1, 0] => Ok(Endianness::Little),
                 [0, 1] => Ok(Endianness::Big),
