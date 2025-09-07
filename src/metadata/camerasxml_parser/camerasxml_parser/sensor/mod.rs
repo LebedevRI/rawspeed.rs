@@ -6,6 +6,7 @@ use super::white;
 use super::xmlparser;
 
 #[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum Bounds {
     Unbounded,
     LowerBounded(iso_min::IsoMin),
@@ -14,7 +15,24 @@ pub enum Bounds {
     Enumerated(iso_list::IsoList),
 }
 
+impl Bounds {
+    #[must_use]
+    #[inline]
+    pub fn contains(&self, iso: i32) -> bool {
+        match self {
+            Bounds::Unbounded => true,
+            Bounds::LowerBounded(iso_min) => iso >= ***iso_min,
+            Bounds::UpperBounded(iso_max) => iso <= ***iso_max,
+            Bounds::Range((iso_min, iso_max)) => {
+                iso >= ***iso_min && iso <= ***iso_max
+            }
+            Bounds::Enumerated(iso_list) => iso_list.values.contains(&iso),
+        }
+    }
+}
+
 impl<'a, 'b> xmlparser::Parse<'a, 'b> for Bounds {
+    #[inline]
     fn parse(
         input: &'b mut xmlparser::ParseStream<'a>,
     ) -> xmlparser::Result<Self> {
