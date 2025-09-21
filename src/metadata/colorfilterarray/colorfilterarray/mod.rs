@@ -1,4 +1,6 @@
-use rawspeed_std::coord_common::{RowLength, RowPitch};
+use rawspeed_std::coord_common::{
+    RowLength, RowPitch,
+};
 use rawspeed_std_ndslice::array2dref::Array2DRef;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -12,6 +14,16 @@ pub enum ColorVariant {
     Yellow,
     Cyan,
 }
+
+impl ColorVariant {
+    #[inline]
+    #[must_use]
+    const fn card() -> usize {
+        7
+    }
+}
+
+pub mod dcraw_filter;
 
 #[derive(Debug, Clone, PartialEq)]
 #[non_exhaustive]

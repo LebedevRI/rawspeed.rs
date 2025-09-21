@@ -1,4 +1,3 @@
-use std::ops::Deref;
 
 use rawspeed_bitstream_bitstreams::bitstreams::BitOrder;
 use rawspeed_codecs_packed_decoder::packed_decoder::Unpacker;
@@ -11,11 +10,8 @@ use rawspeed_metadata_camerasxml_parser::camerasxml_parser::Cameras;
 use rawspeed_metadata_camerasxml_parser::camerasxml_parser::Hints;
 use rawspeed_metadata_camerasxml_parser::camerasxml_parser::Supported;
 use rawspeed_metadata_camerasxml_parser::camerasxml_parser::blackareas::BlackArea;
-use rawspeed_metadata_camerasxml_parser::camerasxml_parser::blackareas::IndividualBlackAreas;
-use rawspeed_metadata_camerasxml_parser::camerasxml_parser::camera::MaybeCFA;
 use rawspeed_metadata_camerasxml_parser::camerasxml_parser::crop::Height;
 use rawspeed_metadata_camerasxml_parser::camerasxml_parser::crop::Width;
-use rawspeed_metadata_colorfilterarray::colorfilterarray::ColorFilterArray;
 use rawspeed_metadata_colorfilterarray::colorfilterarray::ColorVariant;
 use rawspeed_std::coord_common::CoordOffset2D;
 use rawspeed_std::coord_common::{
@@ -191,6 +187,7 @@ impl<'a> NakedDemuxer<'a> {
     }
 }
 
+#[expect(clippy::missing_trait_methods)]
 impl RawDemuxer for NakedDemuxer<'_> {
     #[inline]
     fn make(&self) -> &str {
@@ -283,11 +280,6 @@ impl RawDemuxer for NakedDemuxer<'_> {
     #[inline]
     fn cfa(&self) -> Option<Array2DRef<'_, ColorVariant>> {
         self.camera.cfa.as_ref().map(|cfa| cfa.mat())
-    }
-
-    #[inline]
-    fn filters(&self) -> Option<()> {
-        None
     }
 
     #[inline]
