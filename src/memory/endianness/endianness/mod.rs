@@ -7,7 +7,8 @@ pub enum Endianness {
 
 #[inline]
 #[must_use]
-pub const fn get_host_endianness() -> Endianness {
+pub const fn get_host_endianness() -> Endianness
+{
     #[cfg(target_endian = "little")]
     {
 
