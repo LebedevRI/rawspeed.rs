@@ -310,7 +310,7 @@ jobs:
           eatmydata apt clean
           rm -rf /var/lib/apt/lists/*
       - name: Install Rust toolchain and targets and crates
-        timeout-minutes: 4
+        timeout-minutes: 5
         run: |
           set -xe
           RUST_COMPONENTS=""
