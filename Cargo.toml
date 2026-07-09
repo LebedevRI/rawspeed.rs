@@ -256,6 +256,7 @@ single_call_fn = { level = "allow", priority = 0 }
 trivially_copy_pass_by_ref = { level = "allow", priority = 0 }
 pattern_type_mismatch = { level = "allow", priority = 0 }
 pub_with_shorthand = { level = "allow", priority = 0 }
+inline_modules = { level = "allow", priority = 0 }
 
 # FIXME: reenable with clippy 1.98, broken in 1.97
 missing_trait_methods = { level = "allow", priority = 0 }
